@@ -80,17 +80,15 @@ get_port_range
 # Display the port range for the current server
 echo "Hostname: $HOSTNAME"
 echo "Port range: $MINPORT - $MAXPORT"
-sleep 2
+sleep 5
 a=$MINPORT
 ((b = MINPORT + 4))
 SCANNUMBER=1
 while [ $b -le $MAXPORT ]
 do
-	echo $a
-	echo $b
-	FILENAME="scan_${SCANNUMBER}.txt"
-	sudo nmap -T4 -sS -p$a-$b -oN $FILENAME -Pn 1.1.1.1
-	sleep 1
+	FILENAME="scans/scan_${SCANNUMBER}.txt"
+	sudo nmap -T4 -sS -p$a-$b -oN $FILENAME -Pn 134.209.45.61
+	sleep 61
 	a=$(( $a+5 ))
 	b=$(( $b+5 ))
 	((SCANNUMBER++))
