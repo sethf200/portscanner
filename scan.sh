@@ -3,6 +3,10 @@
 # Define function to determine port range based on hostname
 get_port_range() {
     case "$HOSTNAME" in
+	LinuxPC)
+	    MINPORT=1
+	    MAXPORT=100
+	    ;;
         Server1)
             MINPORT=1
             MAXPORT=4369
@@ -80,12 +84,14 @@ sleep 2
 a=$MINPORT
 ((b = MINPORT + 4))
 SCANNUMBER=1
-
 while [ $b -le $MAXPORT ]
 do
 	echo $a
 	echo $b
-	nmap -T4 -sS -p$a-$b -pN -oN 'scan$SCANUMBER' 134.209.45.61
+	FILENAME="scan_${SCANNUMBER}.txt"
+	sudo nmap -T4 -sS -p$a-$b -oN $FILENAME -Pn 1.1.1.1
+	sleep 1
 	a=$(( $a+5 ))
 	b=$(( $b+5 ))
+	((SCANNUMBER++))
 done
